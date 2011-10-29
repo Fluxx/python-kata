@@ -18,8 +18,27 @@ class ChopTest(unittest.TestCase):
         
         return -1
 
+    def recursive_chop(self, value, arr, low=0, high=None):
+        if high == None:
+            high = len(arr) - 1
+
+        if low > high:
+            return -1
+
+        middle = (low + high) / 2
+
+        if value == arr[middle]:
+            return middle
+        elif value > arr[middle]:
+            return self.recursive_chop(value, arr, middle+1, high)
+        elif value < arr[middle]:
+            return self.recursive_chop(value, arr, 0, middle-1)
+        else:
+            return -1
+
     def test_chop(self):
         self.run_tests_with(self.iterative_chop)
+        self.run_tests_with(self.recursive_chop)
 
     def run_tests_with(self, chop_method):
         self.assertEqual(-1, chop_method(3, []))
