@@ -36,9 +36,26 @@ class ChopTest(unittest.TestCase):
         else:
             return -1
 
+    def functional_chop(self, value, arr, offset=0):
+        if len(arr) == 0:
+            return -1
+
+        low, high = 0, len(arr) - 1
+        middle = (low + high) / 2
+
+        if value == arr[middle]:
+            return offset + middle
+        elif value > arr[middle]:
+            return self.functional_chop(value, arr[middle+1:], offset+middle+1)
+        elif value < arr[middle]:
+            return self.functional_chop(value, arr[0:middle])
+        else:
+            return -1
+
     def test_chop(self):
         self.run_tests_with(self.iterative_chop)
         self.run_tests_with(self.recursive_chop)
+        self.run_tests_with(self.functional_chop)
 
     def run_tests_with(self, chop_method):
         self.assertEqual(-1, chop_method(3, []))
