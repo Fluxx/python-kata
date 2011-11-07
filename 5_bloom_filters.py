@@ -4,9 +4,11 @@ class BloomFilter(object):
     def __init__(self, size=100000000, hashes=2, word_file='/usr/share/dict/words'):
         self.size = size
         self.hashes = hashes
+
+        print "Creating a %s element byte array..." % self.size
         self.byte_array = [0] * self.size
 
-        print "Loading up the word list, hasing %d times..." % self.hashes
+        print "Loading up the word list, hashing %d times..." % self.hashes
         for word in open(word_file):
             self.add(word.strip())
 
