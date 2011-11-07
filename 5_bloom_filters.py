@@ -28,10 +28,19 @@ class BloomFilter(object):
 
 checker = BloomFilter()
 
-print checker.includes('dadsadasdasdsadasdad')
-print checker.includes('apple')
-print checker.includes('cheese')
-print checker.includes('ada422')
-print checker.includes('cat')
-print checker.includes('zookeeper')
-print checker.includes('dasdsada298')
+words = [
+    'kitchen',
+    'apple',
+    'cheese',
+    'ada422',
+    'cat',
+    'zookeeper',
+    'data',
+    'i;2h[22',
+    'chef',
+    'mammal',
+    'lamp'
+]
+
+for word in words:
+    print "%s: %s" % (word.rjust(15), checker.includes(word))
