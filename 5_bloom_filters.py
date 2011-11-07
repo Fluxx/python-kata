@@ -1,7 +1,7 @@
 class BloomFilter(object):
     """Bloom filter spell checker"""
 
-    def __init__(self, size=1000000, hashes=5, word_file='/usr/share/dict/words'):
+    def __init__(self, size=100000000, hashes=2, word_file='/usr/share/dict/words'):
         self.size = size
         self.hashes = hashes
         self.byte_array = [0] * self.size
