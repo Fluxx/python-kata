@@ -29,21 +29,35 @@ class BloomFilter(object):
     def includes(self, word):
         return all(self.values(word))
 
+################################################################################
+# Test run #####################################################################
+################################################################################
+
 checker = BloomFilter()
 
-words = [
-    'kitchen',
-    'apple',
-    'cheese',
-    'ada422',
-    'cat',
-    'zookeeper',
-    'data',
-    'i;2h[22',
-    'chef',
-    'mammal',
-    'lamp'
-]
+import string
+import random
+import subprocess
 
-for word in words:
-    print "%s: %s" % (word.rjust(15), checker.includes(word))
+def random_string(size=5):
+    characters = (random.choice(string.ascii_lowercase) for x in range(size))
+    return''.join(characters)
+
+number_strings_to_check = 10000
+
+print 'Tryng %s random generated words...' % number_strings_to_check
+
+false_positves = 0
+
+for i in range(number_strings_to_check):
+    word = random_string(5)
+
+    if checker.includes(word):
+        command = ('grep', '-w', word, checker.word_file)
+        try:
+            subprocess.check_output(command)
+        except subprocess.CalledProcessError:
+            false_positves += 1
+
+format = (false_positves, number_strings_to_check, (float(false_positves) / number_strings_to_check)*100)
+print "%s false positives out of %s total checks (%s%%)" % format
